@@ -1,17 +1,29 @@
 import React, { useState } from 'react'
 
 const App = () => {
-  const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
-  ]) 
+  const [ persons, setPersons] = useState([ { name: 'Arto Hellas' } ]) 
   const [ newName, setNewName ] = useState('')
 
-    const addName = (event) => {
+  const addName = (event) => {
       event.preventDefault()
-      const nameObject = {
+
+      const nameObject = {    
           name: newName,
       }
       setPersons([...persons,nameObject])
+      setNewName("")
+
+		// Alert jos on jo sama nimi
+    const samePerson = persons.find(
+      (person) => person.name.toLowerCase() === newName.toLowerCase()
+    )
+
+    if (samePerson) {
+      alert(`${newName} is already added to phonebook`)
+      setPersons(persons)
+      setNewName("")
+      return
+    }
   }
 
   const handleNameChange = (event) => {
